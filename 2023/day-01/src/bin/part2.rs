@@ -30,7 +30,7 @@ fn part2(input: &str) -> i32 {
                     temp.push(ch.to_digit(10).unwrap() as i32);
                 }
             }
-            for j in 0..line.len() {
+            for j in i + 1..line.len() {
                 if let Some(substring) = line.get(i..j + 1) {
                     if let Some(&value) = nums_map.get(substring) {
                         temp.push(value);

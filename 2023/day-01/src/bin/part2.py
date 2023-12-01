@@ -20,7 +20,7 @@ for line in content:
     for i in range(len(line)):
         if line[i].isdigit():
             tmp.append(int(line[i]))
-        for j in range(len(line)):
+        for j in range(i + 1, len(line)):
             if line[i : j + 1] in num_map:
                 tmp.append(num_map[line[i : j + 1]])
 
