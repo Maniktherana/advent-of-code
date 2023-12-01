@@ -1,0 +1,1 @@
+/Users/manikrana/vscode/advent-of-code/2023/day-01/target/debug/part1: /Users/manikrana/vscode/advent-of-code/2023/day-01/src/bin/input1.txt /Users/manikrana/vscode/advent-of-code/2023/day-01/src/bin/part1.rs
