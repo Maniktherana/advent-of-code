@@ -1,4 +1,4 @@
-use regex::Regex;
+use std::collections::HashMap;
 
 fn main() {
     let input = include_str!("./input2.txt");
@@ -7,39 +7,50 @@ fn main() {
 }
 
 fn part2(input: &str) -> i32 {
-    let mut res = 0;
+    let mut nums_map: HashMap<&str, i32> = HashMap::new();
+    nums_map.insert("one", 1);
+    nums_map.insert("two", 2);
+    nums_map.insert("three", 3);
+    nums_map.insert("four", 4);
+    nums_map.insert("five", 5);
+    nums_map.insert("six", 6);
+    nums_map.insert("seven", 7);
+    nums_map.insert("eight", 8);
+    nums_map.insert("nine", 9);
 
-    let regex_pattern = r"(?=(one|two|three|four|five|six|seven|eight|nine))|(\d)";
-    let re = Regex::new(regex_pattern).unwrap();
+    let mut line_arr = Vec::new();
 
     for line in input.lines() {
-        let mut matches = Vec::new();
-        for mat in re.find_iter(line) {
-            if let Some(digit_match) = mat.as_str().parse::<i32>().ok() {
-                matches.push(digit_match);
-            } else {
-                match mat.as_str() {
-                    "one" => matches.push(1),
-                    "two" => matches.push(2),
-                    "three" => matches.push(3),
-                    "four" => matches.push(4),
-                    "five" => matches.push(5),
-                    "six" => matches.push(6),
-                    "seven" => matches.push(7),
-                    "eight" => matches.push(8),
-                    "nine" => matches.push(9),
-                    _ => continue,
+
+        let mut temp = Vec::new();
+
+        for i in 0..line.len() {
+            if let Some(ch) = line.chars().nth(i) {
+                if ch.is_numeric() {
+                    temp.push(ch.to_digit(10).unwrap() as i32);
+                }
+            }
+            for j in 0..line.len() {
+                if let Some(substring) = line.get(i..j + 1) {
+                    if let Some(&value) = nums_map.get(substring) {
+                        temp.push(value);
+                    }
                 }
             }
         }
-        let first = matches.first().unwrap();
-        let last = matches.last().unwrap();
-        let num = first * 10 + last;
-        res += num;
-        println!("{line} {:?}", matches);
+        line_arr.push(temp);
+    }
+
+    let mut res = 0;
+
+    for num in line_arr {
+        let first = num.first().unwrap();
+        let last = num.last().unwrap();
+        res += first * 10 + last;
     }
 
     res
+
 }
 
 #[cfg(test)]
