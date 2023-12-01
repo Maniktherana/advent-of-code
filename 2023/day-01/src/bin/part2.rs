@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 fn main() {
     let input = include_str!("./input2.txt");
     let output = part2(input);
@@ -7,54 +5,29 @@ fn main() {
 }
 
 fn part2(input: &str) -> i32 {
-    let nums_map: HashMap<&str, i32> = [
-        ("one", 1),
-        ("two", 2),
-        ("three", 3),
-        ("four", 4),
-        ("five", 5),
-        ("six", 6),
-        ("sevenr", 7),
-        ("eight", 8),
-        ("nine", 9),
-    ]
-    .iter()
-    .cloned()
-    .collect();
-
-    let mut line_arr = Vec::new();
-
-    for line in input.lines() {
-
-        let mut temp = Vec::new();
-
-        for i in 0..line.len() {
-            if let Some(ch) = line.chars().nth(i) {
-                if ch.is_numeric() {
-                    temp.push(ch.to_digit(10).unwrap() as i32);
-                }
-            }
-            for j in i + 1..line.len() {
-                if let Some(substring) = line.get(i..j + 1) {
-                    if let Some(&value) = nums_map.get(substring) {
-                        temp.push(value);
-                    }
-                }
-            }
-        }
-        line_arr.push(temp);
-    }
-
     let mut res = 0;
+    for line in input.lines() {
+        let line = line.replace("one", "o1e")
+            .replace("two", "t2o")
+            .replace("three", "t3e")
+            .replace("four", "f4r")
+            .replace("five", "f5e")
+            .replace("six", "s6x")
+            .replace("seven", "s7n")
+            .replace("eight", "e8t")
+            .replace("nine", "n9e");
+        // convert lines to list of chars
+        let chars: Vec<char> = line.chars().collect();
+        // remove all non-numeric chars
+        let nums: Vec<char> = chars.into_iter().filter(|c| c.is_numeric()).collect();
+        // get first and last items and convert to i32
+        let first = nums.first().unwrap().to_digit(10).unwrap() as i32;
+        let last = nums.last().unwrap().to_digit(10).unwrap() as i32;
+        let num = first * 10 + last;
 
-    for num in line_arr {
-        let first = num.first().unwrap();
-        let last = num.last().unwrap();
-        res += first * 10 + last;
+        res += num;
     }
-
     res
-
 }
 
 #[cfg(test)]
@@ -63,14 +36,10 @@ mod test {
 
     #[test]
     fn test2() {
-        let result = part2("\
-        two1nine
-        eightwothree
-        abcone2threexyz
-        xtwone3four
-        4nineeightseven2
-        zoneight234
-        7pqrstsixteen");
-        assert_eq!(result, 281);
+        let result = part2("1abc2
+        pqr3stu8vwx
+        a1b2c3d4e5f
+        treb7uchet");
+        assert_eq!(result, 142);
     }
 }
