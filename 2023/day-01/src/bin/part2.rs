@@ -43,6 +43,6 @@ mod test {
         4nineeightseven2
         zoneight234
         7pqrstsixteen");
-        assert_eq!(result, 142);
+        assert_eq!(result, 281);
     }
 }
