@@ -26,7 +26,7 @@ mod test {
     use super::*;
 
     #[test]
-    fn it_works() {
+    fn test1() {
         let result = part1("1abc2
         pqr3stu8vwx
         a1b2c3d4e5f
