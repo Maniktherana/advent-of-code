@@ -7,16 +7,20 @@ fn main() {
 }
 
 fn part2(input: &str) -> i32 {
-    let mut nums_map: HashMap<&str, i32> = HashMap::new();
-    nums_map.insert("one", 1);
-    nums_map.insert("two", 2);
-    nums_map.insert("three", 3);
-    nums_map.insert("four", 4);
-    nums_map.insert("five", 5);
-    nums_map.insert("six", 6);
-    nums_map.insert("seven", 7);
-    nums_map.insert("eight", 8);
-    nums_map.insert("nine", 9);
+    let nums_map: HashMap<&str, i32> = [
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+        ("four", 4),
+        ("five", 5),
+        ("six", 6),
+        ("sevenr", 7),
+        ("eight", 8),
+        ("nine", 9),
+    ]
+    .iter()
+    .cloned()
+    .collect();
 
     let mut line_arr = Vec::new();
 
